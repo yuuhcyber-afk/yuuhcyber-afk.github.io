@@ -3,24 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VRM Viewer</title>
+    <title>Three.js VRM Viewer</title>
     <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
-        #menu { position: absolute; top: 20px; right: 20px; }
-        button { background-color: cyan; border: none; color: white; padding: 10px 20px; margin: 5px; cursor: pointer; }
-        button:hover { background-color: purple; }
+        body { margin: 0; }
+        canvas { display: block; }
+        #menu { position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 5px; }
+        button { color: white; background-color: transparent; border: none; cursor: pointer; margin: 5px; }
+        button:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
     <div id="menu">
-        <button onclick="loadOption('cyan')">Cyan Option</button>
-        <button onclick="loadOption('purple')">Purple Option</button>
+        <button id="toggle-menu">Menu</button>
+        <div id="options" style="display:none;">
+            <button style="color: cyan;">Cyan Option</button>
+            <button style="color: purple;">Purple Option</button>
+        </div>
     </div>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://cdn.rawgit.com/safène/vrm/master/build/VRM.js"></script>
     <script>
-        function loadOption(option) {
-            alert('You selected: ' + option);
-            // Load VRM viewer logic here
+        // Menu toggle functionality
+        const toggleMenu = document.getElementById('toggle-menu');
+        const options = document.getElementById('options');
+        toggleMenu.onclick = () => {
+            options.style.display = options.style.display === 'none' ? 'block' : 'none';
+        };
+
+        // Three.js VRM viewer setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add VRM model loading and viewer functionality here
+        // Original 3D viewer functionality to be retained
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
         }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
